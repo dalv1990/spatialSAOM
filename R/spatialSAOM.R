@@ -1,6 +1,4 @@
-library(statnet)
 library(RSiena)
-library(rio)
 
 
 spatialSAOM <- function(formula, diffusion=list(), data, net, rateFix=20, maxRounds=10, method="avAlt", projname="saom",...){
@@ -108,38 +106,3 @@ spatialSAOM <- function(formula, diffusion=list(), data, net, rateFix=20, maxRou
     }
   }
 }
-
-
-
-
-
-
-# 
-# 
-# 
-# 
-# 
-# n <- matrix(c(0,1,1,1,0,0,1,0,0), nrow=3)
-# df<-data.frame(cbind(c(0,0,1),c(50,10,20), c(0,1,1)))
-# names(df)<-c("ssm", "gdp", "religion")
-# s<-saom.static(ssm ~ gdp + religion, data=df, net=n)
-# 
-# 
-# # generate Y variable
-# dv<-cbind(data[,toString(formula[[2]])], data[,toString(formula[[2]])])
-# dv[1,]<-c(0,1)
-# dv.name<-toString(formula[[2]])
-# assign(dv.name,sienaDependent(dv, type = "behavior",allowOnly = FALSE))
-# 
-# # generate X variables
-# l<-length(attr(terms(formula),"variables"))
-# iv.name<-list()
-# for(i in 3:l){
-#   iv.name[i-2]<-toString(attr(terms(formula),"variables")[[i]])
-#   assign(iv.name[[i-2]],eval(parse(text = "coCovar(df[,toString(iv.name[[i-2]])])")))
-# }
-# 
-# 
-# 
-# 
-#   

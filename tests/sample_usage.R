@@ -1,15 +1,22 @@
-
 # EXAMPLE USE
 
-setwd("G:/My Drive/ssm-diffusion/analysis")
-longSSM <- import("../data/generated/countries_longitudinal.Rdata")
-contiguity <- read.csv("../data/generated/matrices/contiguity-2000.csv", header = FALSE)
-idsGeography <- unname(t(contiguity[1,]))
-matrixGeography <- as.matrix(contiguity[-1,])
-n<-matrixGeography[1:30,1:30]
-rownames(matrixGeography) <- colnames(matrixGeography) <- idsGeography
-matrixGeography <- matrixGeography[order(idsGeography), order(idsGeography)]
-df<-as.data.frame(cbind(floor(runif(30, min=0, max=1)), floor(runif(30, min=0, max=4)),floor(runif(30, min=0, max=4))))
-names(df)<-c("y","x1","x2")
-ss<-saom.static(y ~ x1, data=df, net=n, maxRound=2, method="avSim")
+# Generate fake data with some clustering
+n <- 100
+
+x <- rnorm(n, 0, 2)
+e <- rnorm(n, 0, 1)
+W <- matrix(sample(c(0,1), n^2, replace = TRUE, prob = c(.8, .2)), nrow = n)
+diag(W) <- 0
+
+rs <- rowSums(W)
+Wstar <- W
+Wstar[rs > 0, rs > 0] <- W[rs > 0, rs > 0] / rs[rs > 0]
+A <- solve(diag(n) - .3 * Wstar)
+
+ystar <- A %*% (1 - x + e)
+y <- ifelse(ystar > 0, 1, 0)
+
+df <- data.frame(y, x)
+
+spatialSAOM(y ~ x, data = df, net = W, maxRound = 2, method = "avSim")
 
