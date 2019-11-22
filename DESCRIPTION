@@ -1,0 +1,11 @@
+Package: spatialSAOM
+Type: Package
+Title: Wrapper for RSiena / SAOM for use with spatial (static) networks
+Version: 0.1.0
+Author: Johan A. Elkink, Thomas U. Grund
+Maintainer: Johan A. Elkink <jelkink@gmail.com>
+BugReports: https://github.com/jelkink/spatialSAOM/issues
+Description: This package provides a wrapper for RSiena / SAOM to use the estimator when the observations are cross-sectional instead of longitudinal, typically with a fixed, structural network, for example one coding geographical adjacency.
+License: GPL-3
+Imports:
+    RSiena
